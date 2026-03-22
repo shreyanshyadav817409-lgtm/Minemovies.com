@@ -567,3 +567,10 @@
     }  
 
     function closeModal() {
+const modal = document.getElementById('videoModal');
+    const player = document.getElementById('player');
+    modal.style.display = 'none';
+    player.src = '';
+    document.body.style.overflow = 'auto';
+}
+</script>
