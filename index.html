@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>MineMovies - Watch Free Movies Online</title>  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">  
+    <style>  
+        * {  
+            margin: 0;  
+            padding: 0;  
+            box-sizing: border-box;  
+        }  body {  
+        font-family: 'Arial', sans-serif;  
+        background: #0f0f0f;  
+        color: white;  
+        overflow-x: hidden;  
+    }  
+
+    /* Header */  
+    .header {  
+        position: fixed;  
+        top: 0;  
+        width: 100%;  
+        background: rgba(0,0,0,0.95);  
+        backdrop-filter: blur(10px);  
+        z-index: 1000;  
+        padding: 1rem 0;  
+    }  
+
+    .nav-container {  
+        max-width: 1400px;  
+        margin: 0 auto;  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        padding: 0 2rem;  
+    }  
+
+    .logo {  
+        font-size: 2rem;  
+        font-weight: bold;  
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+        text-decoration: none;  
+    }  
+
+    .nav-menu {  
+        display: flex;  
+        list-style: none;  
+        gap: 2rem;  
+    }  
+
+    .nav-menu a {  
+        color: white;  
+        text-decoration: none;  
+        font-weight: 500;  
+        transition: color 0.3s;  
+    }  
+
+    .nav-menu a:hover {  
+        color: #4ecdc4;  
+    }  
+
+    .search-box {  
+        display: flex;  
+        background: #333;  
+        border-radius: 25px;  
+        padding: 0.5rem;  
+        width: 300px;  
+    }  
+
+    .search-box input {  
+        background: none;  
+        border: none;  
+        color: white;  
+        padding: 0.5rem 1rem;  
+        flex: 1;  
+        outline: none;  
+    }  
+
+    .search-box i {  
+        color: #ccc;  
+        padding: 0 1rem;  
+    }  
+
+    .menu-toggle {  
+        display: none;  
+        font-size: 1.5rem;  
+        cursor: pointer;  
+    }  
+
+    /* Hero Section */  
+    .hero {  
+        height: 100vh;  
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23001122" width="1200" height="600"/><circle fill="%234ecdc4" opacity="0.1" cx="200" cy="150" r="100"/><circle fill="%23ff6b6b" opacity="0.1" cx="1000" cy="400" r="150"/><rect fill="%23ff4757" opacity="0.05" x="300" y="200" width="200" height="100"/></svg>');  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        text-align: center;  
+    }  
+
+    .hero-content h1 {  
+        font-size: 4rem;  
+        margin-bottom: 1rem;  
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+    }  
+
+    .hero-content p {  
+        font-size: 1.5rem;  
+        margin-bottom: 2rem;  
+        opacity: 0.9;  
+    }  
+
+    .cta-button {  
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);  
+        color: white;  
+        padding: 1rem 2rem;  
+        border: none;  
+        border-radius: 50px;  
+        font-size: 1.2rem;  
+        cursor: pointer;  
+        transition: transform 0.3s;  
+        text-decoration: none;  
+        display: inline-block;  
+    }  
+
+    .cta-button:hover {  
+        transform: scale(1.05);  
+    }  
+
+    /* Movies Grid */  
+    .movies-section {  
+        padding: 5rem 2rem;  
+        max-width: 1400px;  
+        margin: 0 auto;  
+    }  
+
+    .section-title {  
+        font-size: 2.5rem;  
+        text-align: center;  
+        margin-bottom: 3rem;  
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+    }  
+
+    .movies-grid {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+        gap: 2rem;  
+    }  
+
+    .movie-card {  
+        background: #1a1a1a;  
+        border-radius: 15px;  
+        overflow: hidden;  
+        transition: transform 0.3s, box-shadow 0.3s;  
+        cursor: pointer;  
+    }  
+
+    .movie-card:hover {  
+        transform: translateY(-10px);  
+        box-shadow: 0 20px 40px rgba(255,107,107,0.3);  
+    }  
+
+    .movie-poster {  
+        width: 100%;  
+        height: 350px;  
+        background: linear-gradient(45deg, #333, #555);  
+        position: relative;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+    }  
+
+    .movie-poster i {  
+        font-size: 4rem;  
+        color: #4ecdc4;  
+        opacity: 0.7;  
+    }  
+
+    .movie-info {  
+        padding: 1.5rem;  
+    }  
+
+    .movie-title {  
+        font-size: 1.3rem;  
+        margin-bottom: 0.5rem;  
+    }  
+
+    .movie-year {  
+        color: #ccc;  
+        margin-bottom: 0.5rem;  
+    }  
+
+    .movie-genre {  
+        background: #ff6b6b;  
+        color: white;  
+        padding: 0.3rem 0.8rem;  
+        border-radius: 20px;  
+        font-size: 0.8rem;  
+        display: inline-block;  
+    }  
+
+    /* Categories */  
+    .categories {  
+        padding: 3rem 2rem;  
+        background: #111;  
+    }  
+
+    .categories-grid {  
+        max-width: 1400px;  
+        margin: 0 auto;  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
+        gap: 1.5rem;  
+        margin-top: 2rem;  
+    }  
+
+    .category-card {  
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);  
+        padding: 2rem;  
+        border-radius: 15px;  
+        text-align: center;  
+        cursor: pointer;  
+        transition: all 0.3s;  
+    }  
+
+    .category-card:hover {  
+        transform: translateY(-5px);  
+        background: linear-gradient(135deg, #ff6b6b, #4ecdc4);  
+    }  
+
+    .category-icon {  
+        font-size: 3rem;  
+        margin-bottom: 1rem;  
+    }  
+
+    /* Player Modal */  
+    .modal {  
+        display: none;  
+        position: fixed;  
+        z-index: 2000;  
+        left: 0;  
+        top: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0,0,0,0.95);  
+        backdrop-filter: blur(10px);  
+    }  
+
+    .modal-content {  
+        position: relative;  
+        max-width: 90%;  
+        max-height: 90%;  
+        margin: 5% auto;  
+        border-radius: 15px;  
+        overflow: hidden;  
+    }  
+
+    .close {  
+        position: absolute;  
+        top: 20px;  
+        right: 30px;  
+        font-size: 2rem;  
+        cursor: pointer;  
+        z-index: 10;  
+        color: white;  
+    }  
+
+    .video-container {  
+        position: relative;  
+        width: 100%;  
+        height: 500px;  
+        background: #000;  
+    }  
+
+    .video-container iframe {  
+        width: 100%;  
+        height: 100%;  
+        border: none;  
+    }  
+
+    /* Responsive */  
+    @media (max-width: 768px) {  
+        .nav-menu {  
+            display: none;  
+        }  
+
+        .menu-toggle {  
+            display: block;  
+        }  
+
+        .search-box {  
+            width: 200px;  
+        }  
+
+        .hero-content h1 {  
+            font-size: 2.5rem;  
+        }  
+
+        .movies-grid {  
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
+            gap: 1rem;  
+        }  
+    }  
+
+    /* Footer */  
+    .footer {  
+        background: #000;  
+        padding: 3rem 2rem 1rem;  
+        text-align: center;  
+    }  
+
+    .footer-content {  
+        max-width: 1400px;  
+        margin: 0 auto;  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+        gap: 2rem;  
+        margin-bottom: 2rem;  
+    }  
+
+    .footer-section h3 {  
+        margin-bottom: 1rem;  
+        color: #4ecdc4;  
+    }  
+
+    .footer-section a {  
+        color: #ccc;  
+        text-decoration: none;  
+        display: block;  
+        margin-bottom: 0.5rem;  
+    }  
+
+    .social-icons {  
+        display: flex;  
+        justify-content: center;  
+        gap: 1rem;  
+        margin-top: 1rem;  
+    }  
+
+    .social-icons a {  
+        display: inline-block;  
+        width: 40px;  
+        height: 40px;  
+        background: #333;  
+        border-radius: 50%;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        transition: background 0.3s;  
+    }  
+
+    .social-icons a:hover {  
+        background: #4ecdc4;  
+    }  
+</style>
+
+</head>  
+<body>  
+    <!-- Header -->  
+    <header class="header">  
+        <nav class="nav-container">  
+            <a href="#" class="logo">MineMovies</a>  
+            <ul class="nav-menu">  
+                <li><a href="#home">Home</a></li>  
+                <li><a href="#movies">Movies</a></li>  
+                <li><a href="#tv">TV Shows</a></li>  
+                <li><a href="#genres">Genres</a></li>  
+            </ul>  
+            <div class="search-box">  
+                <i class="fas fa-search"></i>  
+                <input type="text" placeholder="Search movies...">  
+            </div>  
+            <div class="menu-toggle">  
+                <i class="fas fa-bars"></i>  
+            </div>  
+        </nav>  
+    </header>  <!-- Hero Section -->  
+<section id="home" class="hero">  
+    <div class="hero-content">  
+        <h1>MineMovies</h1>  
+        <p>Watch Unlimited Movies & TV Shows Free</p>  
+        <a href="#movies" class="cta-button">Start Watching Now</a>  
+    </div>  
+</section>  
+
+<!-- Movies Section -->  
+<section id="movies" class="movies-section">  
+    <h2 class="section-title">Featured Movies</h2>  
+    <div class="movies-grid">  
+        <div class="movie-card" onclick="openModal('Avengers Endgame', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">Avengers: Endgame</div>  
+                <div class="movie-year">2019</div>  
+                <span class="movie-genre">Action</span>  
+            </div>  
+        </div>  
+        <div class="movie-card" onclick="openModal('Inception', 'https://www.youtube.com/embed/YoHD9XEInc0')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">Inception</div>  
+                <div class="movie-year">2010</div>  
+                <span class="movie-genre">Sci-Fi</span>  
+            </div>  
+        </div>  
+        <div class="movie-card" onclick="openModal('The Matrix', 'https://www.youtube.com/embed/m8e-FF8MsqU')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">The Matrix</div>  
+                <div class="movie-year">1999</div>  
+                <span class="movie-genre">Action</span>  
+            </div>  
+        </div>  
+        <div class="movie-card" onclick="openModal('Interstellar', 'https://www.youtube.com/embed/zSWdZVtXT7E')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">Interstellar</div>  
+                <div class="movie-year">2014</div>  
+                <span class="movie-genre">Sci-Fi</span>  
+            </div>  
+        </div>  
+        <div class="movie-card" onclick="openModal('John Wick', 'https://www.youtube.com/embed/Bq3c5BV4PjE')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">John Wick</div>  
+                <div class="movie-year">2014</div>  
+                <span class="movie-genre">Action</span>  
+            </div>  
+        </div>  
+        <div class="movie-card" onclick="openModal('Parasite', 'https://www.youtube.com/embed/5x96pS6Ptes')">  
+            <div class="movie-poster">  
+                <i class="fas fa-film"></i>  
+            </div>  
+            <div class="movie-info">  
+                <div class="movie-title">Parasite</div>  
+                <div class="movie-year">2019</div>  
+                <span class="movie-genre">Thriller</span>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
+
+<!-- Categories Section -->  
+<section class="categories">  
+    <h2 class="section-title" style="text-align: center;">Explore Categories</h2>  
+    <div class="categories-grid">  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-fire"></i>  
+            </div>  
+            <h3>Action</h3>  
+        </div>  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-brain"></i>  
+            </div>  
+            <h3>Sci-Fi</h3>  
+        </div>  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-heart"></i>  
+            </div>  
+            <h3>Romance</h3>  
+        </div>  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-skull"></i>  
+            </div>  
+            <h3>Horror</h3>  
+        </div>  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-child"></i>  
+            </div>  
+            <h3>Family</h3>  
+        </div>  
+        <div class="category-card">  
+            <div class="category-icon">  
+                <i class="fas fa-star"></i>  
+            </div>  
+            <h3>Top Rated</h3>  
+        </div>  
+    </div>  
+</section>  
+
+<!-- Video Player Modal -->  
+<div id="videoModal" class="modal">  
+    <div class="modal-content">  
+        <span class="close" onclick="closeModal()">&times;</span>  
+        <div class="video-container">  
+            <iframe id="player" src="" allowfullscreen></iframe>  
+        </div>  
+    </div>  
+</div>  
+
+<!-- Footer -->  
+<footer class="footer">  
+    <div class="footer-content">  
+        <div class="footer-section">  
+            <h3>MineMovies</h3>  
+            <p>Watch your favorite movies and TV shows for free. Unlimited streaming, no subscriptions required.</p>  
+        </div>  
+        <div class="footer-section">  
+            <h3>Quick Links</h3>  
+            <a href="#">Home</a>  
+            <a href="#">Movies</a>  
+            <a href="#">TV Shows</a>  
+            <a href="#">Genres</a>  
+            <a href="#">Contact</a>  
+        </div>  
+        <div class="footer-section">  
+            <h3>Legal</h3>  
+            <a href="#">Privacy Policy</a>  
+            <a href="#">Terms of Service</a>  
+            <a href="#">DMCA</a>  
+        </div>  
+        <div class="footer-section">  
+            <h3>Connect</h3>  
+            <div class="social-icons">  
+                <a href="#"><i class="fab fa-facebook"></i></a>  
+                <a href="#"><i class="fab fa-twitter"></i></a>  
+                <a href="#"><i class="fab fa-instagram"></i></a>  
+                <a href="#"><i class="fab fa-youtube"></i></a>  
+            </div>  
+        </div>  
+    </div>  
+    <div style="border-top: 1px solid #333; padding-top: 2rem; margin-top: 2rem;">  
+        <p>&copy; 2024 MineMovies. All rights reserved.</p>  
+    </div>  
+</footer>  
+
+<script>  
+    function openModal(title, videoId) {  
+        const modal = document.getElementById('videoModal');  
+        const player = document.getElementById('player');  
+        player.src = videoId;  
+        document.title = title + ' - MineMovies';  
+        modal.style.display = 'block';  
+        document.body.style.overflow = 'hidden';  
+    }  
+
+    function closeModal() {
